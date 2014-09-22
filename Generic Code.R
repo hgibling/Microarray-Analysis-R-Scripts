@@ -438,6 +438,8 @@ quartz.save(paste(subsubdir.images, paste(TISSUE, "Proportion of Variance PCA.pd
 
 ##### Use ANOVA to Determine Differentially Expressed Genes #####
 
+#code modified from Pavlidis, P. 2003 Methods 31(4):282-289
+
 dir.create(paste(subdir.drop.preproc.filt, "Differentially Expressed Gene Lists", sep="/"))
 subsubdir.DE <- paste(subdir.drop.preproc.filt, "Differentially Expressed Gene Lists/", sep="/")
 
