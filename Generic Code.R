@@ -21,7 +21,7 @@ TISSUE <- "put type of tissue here"
 # Have just the Cel files in one folder on your desktop
 
 cel.folder.name <- "put folder name here"
-#for example: cel.folder.name <- "Cel Files"
+#for example: cel.folder.name <- "Liver Cel Files"
 #must type the name exactly as it appears (capitalization, spaces, etc)
 
 ##################################################
@@ -91,11 +91,24 @@ pca.values.raw <- prcomp(transposed.raw.expression.matrix)
 normal<-par(mar=c(5.1, 4.1, 4.1, 2.1), xpd=F)
 
 par(mar=c(5.1, 4.1, 4.1, 6.1), xpd=T)
+#adds space on the side of the graph for the legend
+
 plot(pca.values.raw$x, col=pca.colors, pch=20, main=paste(TISSUE, "Raw PCA Plot", sep=" "))
 text(pca.values.raw$x, pos=3, offset=0.2, labels=pca.numbers, cex=0.5)
 legend("topright", inset=c(-0.15,0), c(pca.conditions), cex=0.75, col=pca.legend.colors, pch=20)
 quartz.save(paste(subdir.allQA, paste(TISSUE, "Raw PCA Plot.pdf", sep=" "), sep=""), type="pdf")
 par(normal)
+#returns the graph parameters to normal
+
+
+### Hierarchical Clustering Dendogram ###
+
+transposed <- t(raw.expression.matrix)
+distance <- dist(transposed)
+sample.clusters <- hclust(distance)
+
+plot(sample.clusters, main=paste(TISSUE, "Raw Hierarchical Cluster Dendogram", sep=" "), xlab="Samples", sub="")
+quartz.save(paste(subdir.allQA, paste(TISSUE, "Raw Hierarchical Cluster Dendogram.pdf", sep=" "), sep=""), type="pdf")
 
 
 ### Image Plots ###
@@ -214,6 +227,16 @@ quartz.save(paste(subdir.all.preproc, paste(TISSUE, "Preprocessed PCA Plot.pdf",
 par(normal)
 
 
+### Hierarchical Clustering Dendogram ###
+
+preprocessed.transposed <- t(preprocessed.expression.matrix)
+preprocessed.distance <- dist(preprocessed.transposed)
+preprocessed.sample.clusters <- hclust(preprocessed.distance)
+
+plot(preprocessed.sample.clusters, main=paste(TISSUE, "Preprocessed Hierarchical Cluster Dendogram", sep=" "), xlab="Samples", sub="")
+quartz.save(paste(subdir.all.preproc, paste(TISSUE, "Preprocessed Hierarchical Cluster Dendogram.pdf", sep=" "), sep=""), type="pdf")
+
+
 ##################################################
 ##################################################
 
@@ -289,6 +312,16 @@ quartz.save(paste(subdir.dropQA, paste(TISSUE, "Raw PCA Plot with Dropped Arrays
 par(normal)
 
 
+### Hierarchical Clustering Dendogram ###
+
+transposed.dropped <- t(raw.expression.matrix.dropped)
+distance.dropped <- dist(transposed.dropped)
+sample.clusters.dropped <- hclust(distance.dropped)
+
+plot(sample.clusters.dropped, main=paste(TISSUE, "Raw Hierarchical Cluster Dendogram \n with Dropped Arrays", sep=" "), xlab="Samples", sub="")
+quartz.save(paste(subdir.dropQA, paste(TISSUE, "Raw Hierarchical Cluster Dendogram with Dropped Arrays.pdf", sep=" "), sep=""), type="pdf")
+
+
 ### PLM Fit ###
 
 raw.tissue.dropped.plm <- fitProbeLevelModel(raw.tissue.dropped)
@@ -345,6 +378,16 @@ text(pca.values.preprocessed.dropped$x, pos=3, offset=0.2, labels=pca.numbers.dr
 legend("topright", inset=c(-0.15,0), c(pca.conditions), cex=0.75, col=pca.legend.colors, pch=20)
 quartz.save(paste(subdir.drop.preproc.im, paste(TISSUE, "Preprocessed PCA Plot with Dropped Arrays.pdf", sep=" "), sep=""), type="pdf")
 par(normal)
+
+
+### Hierarchical Clustering Dendogram ###
+
+preprocessed.transposed.dropped <- t(preprocessed.expression.matrix.dropped)
+preprocessed.distance.dropped <- dist(preprocessed.transposed.dropped)
+preprocessed.sample.clusters.dropped <- hclust(preprocessed.distance.dropped)
+
+plot(preprocessed.sample.clusters.dropped, main=paste(TISSUE, "Preprocessed Hierarchical Cluster Dendogram \n with Dropped Arrays", sep=" "), xlab="Samples", sub="")
+quartz.save(paste(subdir.drop.preproc.im, paste(TISSUE, "Preprocessed Hierarchical Cluster Dendogram with Dropped Arrays.pdf", sep=" "), sep=""), type="pdf")
 
 
 ##### Filter Genes to Remove Those with No Annotation #####
@@ -434,6 +477,16 @@ barplot(proportion.variance,beside=T, col=c("black","gray"), main=paste(TISSUE, 
 legend("topleft",inset=0.01, cex=0.75, c("Proportion of Variance", "Cumulative Proportion"), pch=15, col=c("black","gray"))
 box()
 quartz.save(paste(subsubdir.images, paste(TISSUE, "Proportion of Variance PCA.pdf", sep=" "), sep=""), type="pdf", width=7, height=7)
+
+
+### Hierarchical Clustering Dendogram ###
+
+annotated.transposed <- t(no.duplicates)
+annotated.distance <- dist(annotated.transposed)
+annotated.sample.clusters <- hclust(annotated.distance)
+
+plot(annotated.sample.clusters, main=paste(TISSUE, "Preprocessed Hierarchical Cluster Dendogram \n with Annotated Genes", sep=" "), xlab="Samples", sub="")
+quartz.save(paste(subsubdir.images, paste(TISSUE, "Preprocessed Hierarchical Cluster Dendogram with Annotated Genes.pdf", sep=" "), sep=""), type="pdf")
 
 
 ##### Use ANOVA to Determine Differentially Expressed Genes #####
