@@ -91,10 +91,10 @@ pca.values.raw <- prcomp(transposed.raw.expression.matrix)
 normal<-par(mar=c(5.1, 4.1, 4.1, 2.1), xpd=F)
 
 par(mar=c(5.1, 4.1, 4.1, 6.1), xpd=T)
-plot(pca.values.raw$x, col=pca.colors, pch=20, main=paste(TISSUE, "PCA Plot Raw", sep=" "))
+plot(pca.values.raw$x, col=pca.colors, pch=20, main=paste(TISSUE, "Raw PCA Plot", sep=" "))
 text(pca.values.raw$x, pos=3, offset=0.2, labels=pca.numbers, cex=0.5)
 legend("topright", inset=c(-0.15,0), c(pca.conditions), cex=0.75, col=pca.legend.colors, pch=20)
-quartz.save(paste(subdir.allQA, paste(TISSUE, "PCA Plot Raw.pdf", sep=" "), sep=""), type="pdf")
+quartz.save(paste(subdir.allQA, paste(TISSUE, "Raw PCA Plot.pdf", sep=" "), sep=""), type="pdf")
 par(normal)
 
 
@@ -207,10 +207,10 @@ transposed.preprocessed.expression.matrix <- t(preprocessed.expression.matrix)
 pca.values.preprocessed <- prcomp(transposed.preprocessed.expression.matrix)
 
 par(mar=c(5.1, 4.1, 4.1, 6.1), xpd=T)
-plot(pca.values.preprocessed$x, col=pca.colors, pch=20, main=paste(TISSUE, "PCA Plot Preprocessed", sep=" "))
+plot(pca.values.preprocessed$x, col=pca.colors, pch=20, main=paste(TISSUE, "Preprocessed PCA Plot", sep=" "))
 text(pca.values.preprocessed$x, pos=3, offset=0.2, labels=pca.numbers, cex=0.5)
 legend("topright", inset=c(-0.15,0), c(pca.conditions), cex=0.75, col=pca.legend.colors, pch=20)
-quartz.save(paste(subdir.all.preproc, paste(TISSUE, "PCA Plot Preprocessed.pdf", sep=" "), sep=""), type="pdf")
+quartz.save(paste(subdir.all.preproc, paste(TISSUE, "Preprocessed PCA Plot.pdf", sep=" "), sep=""), type="pdf")
 par(normal)
 
 
@@ -282,10 +282,10 @@ transposed.raw.expression.matrix.dropped <- t(raw.expression.matrix.dropped)
 pca.values.raw.dropped <- prcomp(transposed.raw.expression.matrix.dropped)
 
 par(mar=c(5.1, 4.1, 4.1, 6.1), xpd=T)
-plot(pca.values.raw.dropped$x, col=pca.colors.dropped, pch=20, main=paste(TISSUE, "PCA Plot Raw with Dropped Arrays", sep=" "))
+plot(pca.values.raw.dropped$x, col=pca.colors.dropped, pch=20, main=paste(TISSUE, "Raw PCA Plot with Dropped Arrays", sep=" "))
 text(pca.values.raw.dropped$x, pos=3, offset=0.2, labels=pca.numbers.dropped, cex=0.5)
 legend("topright", inset=c(-0.15,0), c(pca.conditions), cex=0.75, col=pca.legend.colors, pch=20)
-quartz.save(paste(subdir.dropQA, paste(TISSUE, "PCA Plot Raw Dropped.pdf", sep=" "), sep=""), type="pdf")
+quartz.save(paste(subdir.dropQA, paste(TISSUE, "Raw PCA Plot with Dropped Arrays.pdf", sep=" "), sep=""), type="pdf")
 par(normal)
 
 
@@ -340,10 +340,10 @@ transposed.preprocessed.expression.matrix <- t(preprocessed.expression.matrix.dr
 pca.values.preprocessed.dropped <- prcomp(transposed.preprocessed.expression.matrix)
 
 par(mar=c(5.1, 4.1, 4.1, 6.1), xpd=T)
-plot(pca.values.preprocessed.dropped$x, col=pca.colors.dropped, pch=20, main=paste(TISSUE, "PCA Plot Preprocessed with Dropped Arrays", sep=" "))
+plot(pca.values.preprocessed.dropped$x, col=pca.colors.dropped, pch=20, main=paste(TISSUE, "Preprocessed PCA Plot with Dropped Arrays", sep=" "))
 text(pca.values.preprocessed.dropped$x, pos=3, offset=0.2, labels=pca.numbers.dropped, cex=0.5)
 legend("topright", inset=c(-0.15,0), c(pca.conditions), cex=0.75, col=pca.legend.colors, pch=20)
-quartz.save(paste(subdir.drop.preproc.im, paste(TISSUE, "PCA Plot Preprocessed with Dropped Arrays.pdf", sep=" "), sep=""), type="pdf")
+quartz.save(paste(subdir.drop.preproc.im, paste(TISSUE, "Preprocessed PCA Plot with Dropped Arrays.pdf", sep=" "), sep=""), type="pdf")
 par(normal)
 
 
@@ -397,8 +397,8 @@ write.table(reference.list, paste(subdir.drop.preproc.filt, paste(TISSUE, "Refer
 
 ##### Images for Filtered Genes Data #####
 
-dir.create(paste(subdir.drop.preproc.filt, "Plots", sep="/"))
-subsubdir.images <- paste(subdir.drop.preproc.filt, "Plots/", sep="/")
+dir.create(paste(subdir.drop.preproc.filt, "Images", sep="/"))
+subsubdir.images <- paste(subdir.drop.preproc.filt, "Images/", sep="/")
 
 
 ### Boxplot ###
