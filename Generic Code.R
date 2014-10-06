@@ -100,6 +100,15 @@ quartz.save(paste(subdir.allQA, paste(TISSUE, "Raw PCA Plot.pdf", sep=" "), sep=
 par(normal)
 #returns the graph parameters to normal
 
+pca.summary.raw <- summary(pca.values.raw)
+proportion.variance.raw <- pca.summary.raw$importance[2:3,1:5]
+#gets the values corresponding to the proportion of variance and cumulative variance for the first five principal components
+
+barplot(proportion.variance.raw, beside=T, col=c("black","gray"), main=paste(TISSUE, "Raw Proportion of Variance of Principal Components", sep=" "), xlab="Principal Components", ylab="Percentage")
+legend("topleft", inset=0.01, cex=0.75, c("Proportion of Variance", "Cumulative Proportion"), pch=15, col=c("black","gray"))
+box()
+quartz.save(paste(subdir.allQA, paste(TISSUE, "Raw Proportion of Variance PCA.pdf", sep=" "), sep=""), type="pdf", width=7, height=7)
+
 
 ### Hierarchical Clustering Dendogram ###
 
@@ -226,6 +235,14 @@ legend("topright", inset=c(-0.15,0), c(pca.conditions), cex=0.75, col=pca.legend
 quartz.save(paste(subdir.all.preproc, paste(TISSUE, "Preprocessed PCA Plot.pdf", sep=" "), sep=""), type="pdf")
 par(normal)
 
+pca.summary.preprocessed <- summary(pca.values.preprocessed)
+proportion.variance.preprocessed <- pca.summary.preprocessed$importance[2:3,1:5]
+
+barplot(proportion.variance.preprocessed, beside=T, col=c("black","gray"), main=paste(TISSUE, "Preprocessed Proportion of Variance of Principal Components", sep=" "), xlab="Principal Components", ylab="Percentage")
+legend("topleft", inset=0.01, cex=0.75, c("Proportion of Variance", "Cumulative Proportion"), pch=15, col=c("black","gray"))
+box()
+quartz.save(paste(subdir.all.preproc, paste(TISSUE, "Preprocessed Proportion of Variance PCA.pdf", sep=" "), sep=""), type="pdf", width=7, height=7)
+
 
 ### Hierarchical Clustering Dendogram ###
 
@@ -311,6 +328,14 @@ legend("topright", inset=c(-0.15,0), c(pca.conditions), cex=0.75, col=pca.legend
 quartz.save(paste(subdir.dropQA, paste(TISSUE, "Raw PCA Plot with Dropped Arrays.pdf", sep=" "), sep=""), type="pdf")
 par(normal)
 
+pca.summary.raw.dropped <- summary(pca.values.raw.dropped)
+proportion.variance.raw.dropped <- pca.summary.raw.dropped$importance[2:3,1:5]
+
+barplot(proportion.variance.raw.dropped, beside=T, col=c("black","gray"), main=paste(TISSUE, "Raw Proportion of Variance of Principal Components \n with Dropped Arrays", sep=" "), xlab="Principal Components", ylab="Percentage")
+legend("topleft", inset=0.01, cex=0.75, c("Proportion of Variance", "Cumulative Proportion"), pch=15, col=c("black","gray"))
+box()
+quartz.save(paste(subdir.dropQA, paste(TISSUE, "Raw Proportion of Variance PCA with Dropped Arrays.pdf", sep=" "), sep=""), type="pdf", width=7, height=7)
+
 
 ### Hierarchical Clustering Dendogram ###
 
@@ -378,6 +403,14 @@ text(pca.values.preprocessed.dropped$x, pos=3, offset=0.2, labels=pca.numbers.dr
 legend("topright", inset=c(-0.15,0), c(pca.conditions), cex=0.75, col=pca.legend.colors, pch=20)
 quartz.save(paste(subdir.drop.preproc.im, paste(TISSUE, "Preprocessed PCA Plot with Dropped Arrays.pdf", sep=" "), sep=""), type="pdf")
 par(normal)
+
+pca.summary.preprocessed.dropped <- summary(pca.values.preprocessed.dropped)
+proportion.variance.preprocessed.dropped <- pca.summary.preprocessed.dropped$importance[2:3,1:5]
+
+barplot(proportion.variance.preprocessed.dropped, beside=T, col=c("black","gray"), main=paste(TISSUE, "Preprocessed Proportion of Variance of Principal Components \n with Dropped Arrays", sep=" "), xlab="Principal Components", ylab="Percentage")
+legend("topleft", inset=0.01, cex=0.75, c("Proportion of Variance", "Cumulative Proportion"), pch=15, col=c("black","gray"))
+box()
+quartz.save(paste(subdir.drop.preproc.im, paste(TISSUE, "Preprocessed Proportion of Variance PCA with Dropped Arrays.pdf", sep=" "), sep=""), type="pdf", width=7, height=7)
 
 
 ### Hierarchical Clustering Dendogram ###
@@ -471,12 +504,11 @@ par(normal)
 
 pca.summary <- summary(pca.annotated.genes)
 proportion.variance <- pca.summary$importance[2:3,1:5]
-#gets the values corresponding to the proportion of variance and cumulative variance for the first five principal components
 
-barplot(proportion.variance,beside=T, col=c("black","gray"), main=paste(TISSUE, "Proportion of Variance of Principal Components", sep=" "), xlab="Principal Components", ylab="Percentage")
+barplot(proportion.variance,beside=T, col=c("black","gray"), main=paste(TISSUE, "Preprocessed Proportion of Variance of Principal Components \n with Annotated Genes", sep=" "), xlab="Principal Components", ylab="Percentage")
 legend("topleft",inset=0.01, cex=0.75, c("Proportion of Variance", "Cumulative Proportion"), pch=15, col=c("black","gray"))
 box()
-quartz.save(paste(subsubdir.images, paste(TISSUE, "Proportion of Variance PCA.pdf", sep=" "), sep=""), type="pdf", width=7, height=7)
+quartz.save(paste(subsubdir.images, paste(TISSUE, "Preprocessed Proportion of Variance PCA with Annotated Genes.pdf", sep=" "), sep=""), type="pdf", width=7, height=7)
 
 
 ### Hierarchical Clustering Dendogram ###
