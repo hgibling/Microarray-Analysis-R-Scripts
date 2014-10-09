@@ -6,9 +6,6 @@
 TISSUE <- "put type of tissue here"
 #for example: TISSUE <- "Liver"
 
-
-# Have the annotation file (Annotations for Rat Gene 21st.csv) on your desktop
-
 # Have just the Cel files in one folder on your desktop
 
 cel.folder.name <- "put folder name here"
@@ -18,13 +15,12 @@ cel.folder.name <- "put folder name here"
 ##################################################
 ##################################################
 
+library(oligo)
 
 dir.create(paste("~/Desktop", paste(TISSUE, "Microarray Analysis", sep=" "), sep="/"))
 main.directory <- paste("~/Desktop", paste(TISSUE, "Microarray Analysis", sep=" "), sep="/")
 dir.create(paste(main.directory, "All 20 Arrays", sep="/"))
 subdir.all <- paste(main.directory, "All 20 Arrays/", sep="/")
-
-library(oligo)
 
 setwd(paste("~/Desktop", cel.folder.name, sep="/"))
 
@@ -195,21 +191,23 @@ for (i in 1:20){
 
 normalized.tissue <- rma(raw.tissue)
 
-dir.create(paste(subdir.all, "Preprocessed Data Images", sep="/"))
-subdir.all.preproc <- paste(subdir.all, "Preprocessed Data Images/", sep="/")
+dir.create(paste(subdir.all, "Preprocessed Data", sep="/"))
+subdir.all.preproc <- paste(subdir.all, "Preprocessed Data/", sep="/")
+dir.create(paste(subdir.all.preproc, "Images", sep="/"))
+subdir.all.preproc.im <- paste(subdir.all, "Images/", sep="/")
 
 
 ### Boxplot ###
 
 boxplot(normalized.tissue, range=1.5, col=plot.colors, xlab="Array", ylab="Log Probe Intensity", main=paste(TISSUE, "Preprocessed Log Probe Intensity", sep=" "))
-quartz.save(paste(subdir.all.preproc, paste(TISSUE, "Preprossed Boxplot.pdf", sep=" "), sep=""), type="pdf", width=15, height=7)
+quartz.save(paste(subdir.all.preproc.im, paste(TISSUE, "Preprossed Boxplot.pdf", sep=" "), sep=""), type="pdf", width=15, height=7)
 
 
 ### Density Plot ###
 
 hist(normalized.tissue, col=plot.colors, lty=1, xlab="Log Intensity", ylab="Density", main=paste(TISSUE, "Preprocessed Density Estimation", sep=" "))
 legend("topright", inset=0.01, cex=0.75, c(condition.names), col=plot.colors, lty=1)
-quartz.save(paste(subdir.all.preproc, paste(TISSUE, "Preprocessed Density Estimation Plot.pdf", sep=" "), sep=""), type="pdf", width=10, height=7)
+quartz.save(paste(subdir.all.preproc.im, paste(TISSUE, "Preprocessed Density Estimation Plot.pdf", sep=" "), sep=""), type="pdf", width=10, height=7)
 
 
 ### Principal Component Analysis ###
@@ -223,7 +221,7 @@ par(mar=c(5.1, 4.1, 4.1, 6.1), xpd=T)
 plot(pca.values.preprocessed$x, col=pca.colors, pch=20, main=paste(TISSUE, "Preprocessed PCA Plot", sep=" "))
 text(pca.values.preprocessed$x, pos=3, offset=0.2, labels=pca.numbers, cex=0.5)
 legend("topright", inset=c(-0.15,0), c(pca.conditions), cex=0.75, col=pca.legend.colors, pch=20)
-quartz.save(paste(subdir.all.preproc, paste(TISSUE, "Preprocessed PCA Plot.pdf", sep=" "), sep=""), type="pdf")
+quartz.save(paste(subdir.all.preproc.im, paste(TISSUE, "Preprocessed PCA Plot.pdf", sep=" "), sep=""), type="pdf")
 par(normal)
 
 pca.summary.preprocessed <- summary(pca.values.preprocessed)
@@ -232,7 +230,7 @@ proportion.variance.preprocessed <- pca.summary.preprocessed$importance[2:3,1:5]
 barplot(proportion.variance.preprocessed, beside=T, col=c("black","gray"), main=paste(TISSUE, "Preprocessed Proportion of Variance of Principal Components", sep=" "), xlab="Principal Components", ylab="Percentage")
 legend("topleft", inset=0.01, cex=0.75, c("Proportion of Variance", "Cumulative Proportion"), pch=15, col=c("black","gray"))
 box()
-quartz.save(paste(subdir.all.preproc, paste(TISSUE, "Preprocessed Proportion of Variance PCA.pdf", sep=" "), sep=""), type="pdf", width=7, height=7)
+quartz.save(paste(subdir.all.preproc.im, paste(TISSUE, "Preprocessed Proportion of Variance PCA.pdf", sep=" "), sep=""), type="pdf", width=7, height=7)
 
 
 ### Hierarchical Clustering Dendogram ###
@@ -242,4 +240,4 @@ preprocessed.distance <- dist(preprocessed.transposed)
 preprocessed.sample.clusters <- hclust(preprocessed.distance)
 
 plot(preprocessed.sample.clusters, main=paste(TISSUE, "Preprocessed Hierarchical Cluster Dendogram", sep=" "), xlab="Samples", sub="")
-quartz.save(paste(subdir.all.preproc, paste(TISSUE, "Preprocessed Hierarchical Cluster Dendogram.pdf", sep=" "), sep=""), type="pdf")
+quartz.save(paste(subdir.all.preproc.im, paste(TISSUE, "Preprocessed Hierarchical Cluster Dendogram.pdf", sep=" "), sep=""), type="pdf")
