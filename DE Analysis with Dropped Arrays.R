@@ -3,6 +3,8 @@
 
 # If after performing Quality Assessment it is decided some arrays should be dropped: 
 
+# Have the annotation file (Annotations for Rat Gene 21st.csv) on your desktop
+
 arrays.to.be.dropped <- c(0, 0, 0)
 #for example: arrays.to.be.dropped<-c(7,13)
 
@@ -222,13 +224,6 @@ subsubdir.images <- paste(subdir.drop.preproc.filt, "Images/", sep="/")
 
 boxplot(no.duplicates, range=1.5, col=plot.colors.dropped, xlab="Array", ylab="Log Probe Intensity", main=paste(TISSUE, "Preprocessed Log Probe Intensity with Annotated Genes", sep=" "))
 quartz.save(paste(subsubdir.images, paste(TISSUE, "Preprossed Boxplot with Annotated Genes.pdf", sep=" "), sep=""), type="pdf", width=15, height=7)
-
-
-### Density Plot ###
-
-hist(normalized.tissue.dropped, col=plot.colors.dropped, lty=1, xlab="Log Intensity", ylab="Density", main=paste(TISSUE, "Preprocessed Density Estimation with Annotated Genes", sep=" "))
-legend("topright", inset=0.01, cex=0.75, c(condition.names.dropped), col=plot.colors.dropped, lty=1)
-quartz.save(paste(subsubdir.images, paste(TISSUE, "Preprocessed Density Estimation Plot with Annotated Genes.pdf", sep=" "), sep=""), type="pdf", width=10, height=7)
 
 
 ### PCA Plot of Filtered Genes ###
